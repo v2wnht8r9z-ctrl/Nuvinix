@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuvinix — Video &amp; Reclame pentru branduri</title>
+<meta name="description" content="Nuvinix — producție video și reclame pentru companii. Filmăm, montăm și livrăm conținut care convertește.">
+<link rel="icon" href="assets/nuvinix-icon.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0b08;
+    --bg-alt:#0f1109;
+    --panel:#14170e;
+    --neon:#baff5f;
+    --neon-dim:#7fa83f;
+    --neon-dark:#2b3a17;
+    --ink:#f2f5ea;
+    --muted:#8b9481;
+    --line:#22271a;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--neon);color:#0a0b08;}
+
+  h1,h2,h3,.display{
+    font-family:'Archivo',sans-serif;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:-0.01em;
+    line-height:0.95;
+  }
+  .mono{font-family:'Space Mono',monospace;}
+
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+
+  .wrap{max-width:1200px;margin:0 auto;padding:0 32px;}
+
+  @media(prefers-reduced-motion: reduce){
+    *{animation:none !important;transition:none !important;}
+  }
+
+  /* ---------- Zigzag signature divider (echoes the N mark) ---------- */
+  .zigzag{
+    width:100%;
+    height:28px;
+    display:block;
+  }
+  .zigzag svg{width:100%;height:100%;display:block;}
+  .zigzag path{
+    fill:none;
+    stroke:var(--neon-dark);
+    stroke-width:2;
+  }
+
+  /* ---------- Nav ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(10,11,8,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 32px;max-width:1200px;margin:0 auto;
+  }
+  .nav-logo{display:flex;align-items:center;gap:10px;}
+  .nav-logo img{height:26px;width:auto;}
+  .nav-logo span{font-family:'Archivo',sans-serif;font-weight:900;letter-spacing:0.02em;font-size:18px;text-transform:uppercase;}
+  .nav-links{display:flex;gap:36px;align-items:center;}
+  .nav-links a{
+    font-family:'Space Mono',monospace;
+    font-size:13px;text-transform:uppercase;letter-spacing:0.06em;
+    color:var(--muted);
+    position:relative;
+    padding:4px 0;
+  }
+  .nav-links a::after{
+    content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--neon);
+    transition:width 0.25s ease;
+  }
+  .nav-links a:hover{color:var(--ink);}
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta{
+    font-family:'Space Mono',monospace;font-size:13px;text-transform:uppercase;letter-spacing:0.04em;
+    background:var(--neon);color:#0a0b08;padding:10px 18px;border-radius:2px;font-weight:700;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .nav-cta:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(186,255,95,0.25);}
+  .nav-toggle{display:none;background:none;border:none;color:var(--ink);font-size:24px;cursor:pointer;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:140px 32px 100px;
+    overflow:hidden;
+  }
+  #particles{position:absolute;inset:0;z-index:0;pointer-events:none;}
+  .hero-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto;width:100%;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;
+    color:var(--neon);border:1px solid var(--neon-dark);padding:8px 14px;border-radius:999px;
+    margin-bottom:28px;
+    opacity:0;animation:fadeUp 0.7s ease forwards;
+  }
+  .eyebrow .dot{width:6px;height:6px;background:var(--neon);border-radius:50%;animation:pulse 1.6s infinite;}
+  .hero h1{
+    font-size:clamp(42px, 8vw, 108px);
+    color:var(--ink);
+    opacity:0;animation:fadeUp 0.8s ease 0.1s forwards;
+  }
+  .hero h1 em{
+    font-style:normal;color:var(--neon);
+  }
+  .hero-sub{
+    max-width:560px;margin-top:26px;font-size:18px;color:var(--muted);line-height:1.6;
+    opacity:0;animation:fadeUp 0.8s ease 0.25s forwards;
+  }
+  .hero-cta{
+    display:flex;gap:16px;margin-top:40px;flex-wrap:wrap;
+    opacity:0;animation:fadeUp 0.8s ease 0.4s forwards;
+  }
+  .btn-primary{
+    background:var(--neon);color:#0a0b08;font-weight:700;
+    font-family:'Space Mono',monospace;font-size:14px;text-transform:uppercase;letter-spacing:0.04em;
+    padding:16px 30px;border-radius:2px;display:inline-flex;align-items:center;gap:10px;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(186,255,95,0.3);}
+  .btn-secondary{
+    border:1px solid var(--line);color:var(--ink);
+    font-family:'Space Mono',monospace;font-size:14px;text-transform:uppercase;letter-spacing:0.04em;
+    padding:16px 30px;border-radius:2px;display:inline-flex;align-items:center;gap:10px;
+    transition:border-color 0.2s ease, color 0.2s ease;
+  }
+  .btn-secondary:hover{border-color:var(--neon);color:var(--neon);}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+  /* stat row */
+  .stats{
+    margin-top:80px;display:grid;grid-template-columns:repeat(4,1fr);
+    border-top:1px solid var(--line);padding-top:32px;gap:20px;
+    opacity:0;animation:fadeUp 0.8s ease 0.55s forwards;
+  }
+  .stat-num{
+    font-family:'Archivo',sans-serif;font-weight:900;font-size:clamp(28px,4vw,44px);color:var(--neon);
+  }
+  .stat-label{font-family:'Space Mono',monospace;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:6px;}
+
+  /* ---------- Section shared ---------- */
+  section{padding:110px 0;position:relative;}
+  .section-head{max-width:640px;margin-bottom:56px;}
+  .section-tag{
+    font-family:'Space Mono',monospace;color:var(--neon);font-size:13px;letter-spacing:0.1em;text-transform:uppercase;
+    display:block;margin-bottom:14px;
+  }
+  .section-head h2{font-size:clamp(30px,4.5vw,52px);}
+  .section-head p{margin-top:16px;color:var(--muted);font-size:16px;line-height:1.6;}
+
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease, transform 0.7s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ---------- Portfolio ---------- */
+  .cat-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px;}
+  .cat-tab{
+    font-family:'Space Mono',monospace;font-size:13px;text-transform:uppercase;letter-spacing:0.04em;
+    padding:10px 18px;border:1px solid var(--line);border-radius:999px;color:var(--muted);
+    cursor:pointer;transition:all 0.2s ease;background:none;
+  }
+  .cat-tab.active,.cat-tab:hover{border-color:var(--neon);color:var(--neon);}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .card{
+    position:relative;border-radius:6px;overflow:hidden;aspect-ratio:9/12;
+    background:linear-gradient(155deg,var(--panel),#0b0d07);
+    border:1px solid var(--line);
+    cursor:pointer;
+  }
+  .card::before{
+    content:'';position:absolute;inset:0;
+    background:
+      repeating-linear-gradient(115deg, transparent 0 18px, rgba(186,255,95,0.035) 18px 19px);
+  }
+  .card-tag{
+    position:absolute;top:16px;left:16px;font-family:'Space Mono',monospace;font-size:11px;
+    background:rgba(10,11,8,0.7);border:1px solid var(--neon-dark);color:var(--neon);
+    padding:5px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:0.05em;z-index:2;
+  }
+  .card-play{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(1);
+    width:56px;height:56px;border-radius:50%;background:var(--neon);
+    display:flex;align-items:center;justify-content:center;z-index:2;
+    transition:transform 0.25s ease;
+  }
+  .card:hover .card-play{transform:translate(-50%,-50%) scale(1.12);}
+  .card-play svg{width:18px;height:18px;fill:#0a0b08;margin-left:2px;}
+  .card-info{
+    position:absolute;bottom:0;left:0;right:0;padding:18px;z-index:2;
+    background:linear-gradient(to top, rgba(10,11,8,0.95), transparent);
+  }
+  .card-info h4{font-family:'Archivo',sans-serif;font-weight:700;font-size:16px;text-transform:none;letter-spacing:0;}
+  .card-info span{font-family:'Space Mono',monospace;font-size:12px;color:var(--muted);}
+
+  /* ---------- Trusted by strip ---------- */
+  .marquee-wrap{
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    padding:34px 0;overflow:hidden;background:var(--bg-alt);
+  }
+  .marquee{display:flex;gap:70px;width:max-content;animation:scroll 22s linear infinite;}
+  .marquee-item{
+    font-family:'Archivo',sans-serif;font-weight:700;font-size:20px;color:var(--line);
+    display:flex;align-items:center;gap:10px;white-space:nowrap;
+  }
+  .marquee-item .sq{width:8px;height:8px;background:var(--neon-dark);}
+  @keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* ---------- Story ---------- */
+  .story{display:grid;grid-template-columns:0.9fr 1.1fr;gap:70px;align-items:center;}
+  .story-visual{
+    aspect-ratio:1/1.05;border-radius:8px;border:1px solid var(--line);
+    background:
+      radial-gradient(circle at 30% 20%, rgba(186,255,95,0.08), transparent 60%),
+      var(--panel);
+    display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
+  }
+  .story-visual img{width:60%;}
+  .founder-tag{
+    position:absolute;bottom:20px;left:20px;right:20px;
+    font-family:'Space Mono',monospace;font-size:12px;color:var(--muted);
+    border-top:1px solid var(--line);padding-top:14px;
+  }
+  .founder-tag b{color:var(--ink);display:block;font-size:14px;margin-bottom:2px;font-family:'Archivo',sans-serif;text-transform:none;}
+  .story-text p{color:var(--muted);font-size:17px;line-height:1.75;margin-bottom:20px;}
+  .story-text p b{color:var(--ink);font-weight:600;}
+
+  /* ---------- Process ---------- */
+  .process{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line);}
+  .process-step{padding:32px 24px;border-right:1px solid var(--line);position:relative;}
+  .process-step:last-child{border-right:none;}
+  .process-step .num{font-family:'Space Mono',monospace;color:var(--neon-dim);font-size:13px;}
+  .process-step h4{margin-top:14px;font-size:18px;text-transform:none;font-family:'Archivo',sans-serif;font-weight:700;}
+  .process-step p{margin-top:10px;color:var(--muted);font-size:14px;line-height:1.6;}
+
+  /* ---------- Contact ---------- */
+  .contact-box{
+    border:1px solid var(--line);border-radius:10px;padding:64px 48px;
+    background:linear-gradient(160deg, var(--panel), var(--bg));
+    text-align:center;position:relative;overflow:hidden;
+  }
+  .contact-box h2{font-size:clamp(30px,5vw,58px);}
+  .contact-box p{color:var(--muted);margin-top:18px;max-width:480px;margin-left:auto;margin-right:auto;}
+  .contact-actions{display:flex;justify-content:center;gap:16px;margin-top:36px;flex-wrap:wrap;}
+  .social-row{display:flex;justify-content:center;gap:26px;margin-top:44px;}
+  .social-row a{
+    font-family:'Space Mono',monospace;font-size:13px;text-transform:uppercase;letter-spacing:0.04em;
+    color:var(--muted);border-bottom:1px solid transparent;
+  }
+  .social-row a:hover{color:var(--neon);border-color:var(--neon);}
+
+  /* ---------- Footer ---------- */
+  footer{border-top:1px solid var(--line);padding:36px 0;}
+  .footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  .footer-inner span{font-family:'Space Mono',monospace;font-size:12px;color:var(--muted);}
+
+  /* ---------- Responsive ---------- */
+  @media(max-width:900px){
+    .nav-links{display:none;}
+    .nav-toggle{display:block;}
+    .stats{grid-template-columns:repeat(2,1fr);}
+    .grid{grid-template-columns:repeat(2,1fr);}
+    .story{grid-template-columns:1fr;gap:40px;}
+    .process{grid-template-columns:repeat(2,1fr);}
+    .process-step{border-bottom:1px solid var(--line);}
+  }
+  @media(max-width:560px){
+    .grid{grid-template-columns:1fr;}
+    .stats{grid-template-columns:repeat(2,1fr);}
+    .process{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a href="#" class="nav-logo">
+      <img src="assets/nuvinix-icon.jpg" alt="Nuvinix">
+      <span>Nuvinix</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#munca">Munca noastră</a>
+      <a href="#poveste">Poveste</a>
+      <a href="#proces">Proces</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="#contact" class="nav-cta">Hai să vorbim</a>
+  </div>
+</header>
+
+<section class="hero">
+  <canvas id="particles"></canvas>
+  <div class="hero-inner">
+    <span class="eyebrow"><span class="dot"></span>Studio video pentru branduri</span>
+    <h1>Filmăm ideea.<br>Montăm <em>impactul.</em></h1>
+    <p class="hero-sub">Nuvinix produce reclame, video de brand și conținut social pentru companii care vor să arate — nu doar să spună — de ce merită alese.</p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary">Programează un apel ↗</a>
+      <a href="#munca" class="btn-secondary">Vezi proiectele</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="stat-num" data-count="48">0</div><div class="stat-label">Ore livrare / proiect</div></div>
+      <div class="stat"><div class="stat-num" data-count="3">0</div><div class="stat-label">Formate incluse</div></div>
+      <div class="stat"><div class="stat-num" data-count="2">0</div><div class="stat-label">Revizii incluse</div></div>
+      <div class="stat"><div class="stat-num" data-count="100">0</div><div class="stat-label">% concept propriu</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="zigzag"><svg viewBox="0 0 1200 28" preserveAspectRatio="none"><path d="M0,20 L60,4 L120,20 L180,4 L240,20 L300,4 L360,20 L420,4 L480,20 L540,4 L600,20 L660,4 L720,20 L780,4 L840,20 L900,4 L960,20 L1020,4 L1080,20 L1140,4 L1200,20"/></svg></div>
+
+<section id="munca">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">Portofoliu</span>
+      <h2>Munca noastră</h2>
+      <p>O selecție de proiecte pregătită pentru voi — înlocuiți fiecare card cu thumbnail-ul și link-ul video real pe măsură ce livrați proiecte.</p>
+    </div>
+
+    <div class="cat-tabs reveal">
+      <button class="cat-tab active" data-filter="all">Toate</button>
+      <button class="cat-tab" data-filter="ads">Reclame performance</button>
+      <button class="cat-tab" data-filter="brand">Video de brand</button>
+      <button class="cat-tab" data-filter="social">Social &amp; Reels</button>
+    </div>
+
+    <div class="grid" id="portfolio-grid">
+      <div class="card reveal" data-cat="ads"><span class="card-tag">Reclamă</span><div class="card-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="card-info"><h4>Nume client</h4><span>Industrie · Meta / TikTok</span></div></div>
+      <div class="card reveal" data-cat="brand"><span class="card-tag">Brand</span><div class="card-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="card-info"><h4>Nume client</h4><span>Industrie · Film corporate</span></div></div>
+      <div class="card reveal" data-cat="social"><span class="card-tag">Social</span><div class="card-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="card-info"><h4>Nume client</h4><span>Industrie · Reels</span></div></div>
+      <div class="card reveal" data-cat="ads"><span class="card-tag">Reclamă</span><div class="card-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="card-info"><h4>Nume client</h4><span>Industrie · YouTube Ads</span></div></div>
+      <div class="card reveal" data-cat="brand"><span class="card-tag">Brand</span><div class="card-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="card-info"><h4>Nume client</h4><span>Industrie · Documentar scurt</span></div></div>
+      <div class="card reveal" data-cat="social"><span class="card-tag">Social</span><div class="card-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="card-info"><h4>Nume client</h4><span>Industrie · TikTok</span></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span class="marquee-item"><span class="sq"></span>Compania A</span>
+    <span class="marquee-item"><span class="sq"></span>Compania B</span>
+    <span class="marquee-item"><span class="sq"></span>Compania C</span>
+    <span class="marquee-item"><span class="sq"></span>Compania D</span>
+    <span class="marquee-item"><span class="sq"></span>Compania E</span>
+    <span class="marquee-item"><span class="sq"></span>Compania A</span>
+    <span class="marquee-item"><span class="sq"></span>Compania B</span>
+    <span class="marquee-item"><span class="sq"></span>Compania C</span>
+    <span class="marquee-item"><span class="sq"></span>Compania D</span>
+    <span class="marquee-item"><span class="sq"></span>Compania E</span>
+  </div>
+</div>
+
+<section id="poveste">
+  <div class="wrap">
+    <div class="story">
+      <div class="story-visual reveal">
+        <img src="assets/nuvinix-icon.jpg" alt="Nuvinix">
+        <div class="founder-tag">
+          <b>Viviana Bota</b>
+          Fondator, Nuvinix
+        </div>
+      </div>
+      <div class="story-text reveal">
+        <span class="section-tag">Povestea noastră</span>
+        <h2 style="margin-bottom:24px;">De ce există Nuvinix</h2>
+        <p><b>Nuvinix</b> a pornit dintr-o observație simplă: majoritatea companiilor au un produs bun, dar niciun video care să-l arate așa cum merită.</p>
+        <p>Suntem un studio mic, condus de <b>Viviana Bota</b>, care lucrează direct cu fiecare client — de la concept și filmare, până la montaj și livrarea reclamelor gata de publicat.</p>
+        <p>Nu livrăm doar footage. Livrăm video gândit pentru un scop: să vândă, să convingă sau să construiască încredere în brandul vostru.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="zigzag"><svg viewBox="0 0 1200 28" preserveAspectRatio="none"><path d="M0,20 L60,4 L120,20 L180,4 L240,20 L300,4 L360,20 L420,4 L480,20 L540,4 L600,20 L660,4 L720,20 L780,4 L840,20 L900,4 L960,20 L1020,4 L1080,20 L1140,4 L1200,20"/></svg></div>
+
+<section id="proces">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">Cum lucrăm</span>
+      <h2>De la brief la livrare</h2>
+    </div>
+    <div class="process reveal">
+      <div class="process-step"><span class="num">01</span><h4>Discovery call</h4><p>Înțelegem brandul, obiectivul campaniei și publicul țintă.</p></div>
+      <div class="process-step"><span class="num">02</span><h4>Concept &amp; script</h4><p>Propunem direcția creativă și structura video-ului.</p></div>
+      <div class="process-step"><span class="num">03</span><h4>Filmare / producție</h4><p>Filmăm pe locație sau folosim materialul vostru existent.</p></div>
+      <div class="process-step"><span class="num">04</span><h4>Montaj &amp; livrare</h4><p>Editare, sunet, subtitrări și export pe toate formatele necesare.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-box reveal">
+      <span class="section-tag">Contact</span>
+      <h2>Hai să facem<br>un video bun.</h2>
+      <p>Spune-ne despre brand și despre ce vreți să arătați — răspundem în cel mult 24 de ore.</p>
+      <div class="contact-actions">
+        <a href="mailto:contact@nuvinix.com" class="btn-primary">Trimite un email ↗</a>
+        <a href="https://www.instagram.com/nuvinix.official" target="_blank" class="btn-secondary">Instagram</a>
+      </div>
+      <div class="social-row">
+        <a href="https://www.instagram.com/nuvinix.official" target="_blank">Instagram</a>
+        <a href="https://www.linkedin.com/company/nuvinixofficial/" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>© 2026 Nuvinix. Toate drepturile rezervate.</span>
+    <span>Studio video &amp; reclame pentru branduri.</span>
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); } });
+  },{threshold:0.15});
+  reveals.forEach(el=>io.observe(el));
+
+  // Counter animation
+  const counters = document.querySelectorAll('.stat-num');
+  const counterIO = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const el = entry.target;
+        const target = parseInt(el.getAttribute('data-count'));
+        let current = 0;
+        const duration = 1200;
+        const stepTime = 16;
+        const steps = duration/stepTime;
+        const increment = target/steps;
+        const tick = ()=>{
+          current += increment;
+          if(current >= target){ el.textContent = target; }
+          else { el.textContent = Math.floor(current); requestAnimationFrame(tick); }
+        };
+        tick();
+        counterIO.unobserve(el);
+      }
+    });
+  },{threshold:0.5});
+  counters.forEach(el=>counterIO.observe(el));
+
+  // Portfolio filter
+  const tabs = document.querySelectorAll('.cat-tab');
+  const cards = document.querySelectorAll('#portfolio-grid .card');
+  tabs.forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      tabs.forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+      const filter = tab.getAttribute('data-filter');
+      cards.forEach(card=>{
+        if(filter === 'all' || card.getAttribute('data-cat') === filter){
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // Ambient particles in hero
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  function resizeCanvas(){
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  function initParticles(){
+    resizeCanvas();
+    particles = [];
+    const count = window.innerWidth < 700 ? 28 : 60;
+    for(let i=0;i<count;i++){
+      particles.push({
+        x: Math.random()*canvas.width,
+        y: Math.random()*canvas.height,
+        r: Math.random()*1.6 + 0.4,
+        vy: Math.random()*0.3 + 0.05,
+        alpha: Math.random()*0.5 + 0.15
+      });
+    }
+  }
+  function animateParticles(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p=>{
+      p.y -= p.vy;
+      if(p.y < -5){ p.y = canvas.height + 5; p.x = Math.random()*canvas.width; }
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(186,255,95,${p.alpha})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(animateParticles);
+  }
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduceMotion){
+    initParticles();
+    animateParticles();
+    window.addEventListener('resize', initParticles);
+  }
+</script>
+</body>
+</html>
