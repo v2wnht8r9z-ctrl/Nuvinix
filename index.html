@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nuvinix — Video &amp; Reclame pentru branduri</title>
-<meta name="description" content="Nuvinix — producție video și reclame pentru companii. Filmăm, montăm și livrăm conținut care convertește.">
+<meta name="description" content="Nuvinix — productie video si reclame pentru companii. Filmam, montam si livram continut care converteste.">
 <link rel="icon" href="assets/nuvinix-icon.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -201,6 +201,8 @@
     background:rgba(10,11,8,0.7);border:1px solid var(--neon-dark);color:var(--neon);
     padding:5px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:0.05em;z-index:2;
   }
+  .card-thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.85;}
+  .card[data-video=""]{cursor:default;}
   .card-play{
     position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(1);
     width:56px;height:56px;border-radius:50%;background:var(--neon);
@@ -229,6 +231,20 @@
   .marquee-item .sq{width:8px;height:8px;background:var(--neon-dark);}
   @keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
+
+  /* ---------- Video modal ---------- */
+  .vmodal{position:fixed;inset:0;z-index:300;background:rgba(5,6,4,0.92);display:none;align-items:center;justify-content:center;padding:24px;}
+  .vmodal.open{display:flex;}
+  .vmodal-box{position:relative;width:min(380px,90vw);aspect-ratio:9/16;max-height:88vh;}
+  .vmodal-box.wide{width:min(960px,92vw);aspect-ratio:16/9;}
+  .vmodal-box iframe{width:100%;height:100%;border:0;border-radius:6px;background:#000;}
+  .vmodal-close{position:absolute;top:-44px;right:0;background:none;border:none;color:var(--ink);font-family:'Space Mono',monospace;font-size:13px;text-transform:uppercase;cursor:pointer;}
+  .vmodal-close:hover{color:var(--neon);}
+
+  /* ---------- Brand logos in strip ---------- */
+  .marquee-item img{height:34px;width:auto;filter:brightness(0) invert(1);opacity:0.45;transition:opacity 0.25s ease;}
+  .marquee-item img:hover{opacity:0.9;}
+
   /* ---------- Story ---------- */
   .story{display:grid;grid-template-columns:0.9fr 1.1fr;gap:70px;align-items:center;}
   .story-visual{
@@ -238,9 +254,10 @@
       var(--panel);
     display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
   }
-  .story-visual img{width:60%;}
+  .story-visual img.founder-photo{width:100%;height:100%;object-fit:cover;object-position:center 20%;}
+  .story-visual::after{content:'';position:absolute;inset:auto 0 0 0;height:38%;background:linear-gradient(to top, rgba(10,11,8,0.92), transparent);pointer-events:none;}
   .founder-tag{
-    position:absolute;bottom:20px;left:20px;right:20px;
+    z-index:2;position:absolute;bottom:20px;left:20px;right:20px;
     font-family:'Space Mono',monospace;font-size:12px;color:var(--muted);
     border-top:1px solid var(--line);padding-top:14px;
   }
@@ -303,12 +320,12 @@
       <span>Nuvinix</span>
     </a>
     <nav class="nav-links">
-      <a href="#munca">Munca noastră</a>
+      <a href="#munca">Munca noastra</a>
       <a href="#poveste">Poveste</a>
       <a href="#proces">Proces</a>
       <a href="#contact">Contact</a>
     </nav>
-    <a href="#contact" class="nav-cta">Hai să vorbim</a>
+    <a href="#contact" class="nav-cta">Hai sa vorbim</a>
   </div>
 </header>
 
@@ -316,10 +333,10 @@
   <canvas id="particles"></canvas>
   <div class="hero-inner">
     <span class="eyebrow"><span class="dot"></span>Studio video pentru branduri</span>
-    <h1>Filmăm ideea.<br>Montăm <em>impactul.</em></h1>
-    <p class="hero-sub">Nuvinix produce reclame, video de brand și conținut social pentru companii care vor să arate — nu doar să spună — de ce merită alese.</p>
+    <h1>Filmam ideea.<br>Montam <em>impactul.</em></h1>
+    <p class="hero-sub">Nuvinix produce reclame, video de brand si continut social pentru companii care vor sa arate — nu doar sa spuna — de ce merita alese.</p>
     <div class="hero-cta">
-      <a href="#contact" class="btn-primary">Programează un apel ↗</a>
+      <a href="#contact" class="btn-primary">Programeaza un apel ↗</a>
       <a href="#munca" class="btn-secondary">Vezi proiectele</a>
     </div>
     <div class="stats">
@@ -337,8 +354,8 @@
   <div class="wrap">
     <div class="section-head reveal">
       <span class="section-tag">Portofoliu</span>
-      <h2>Munca noastră</h2>
-      <p>O selecție de proiecte pregătită pentru voi — înlocuiți fiecare card cu thumbnail-ul și link-ul video real pe măsură ce livrați proiecte.</p>
+      <h2>Munca noastra</h2>
+      <p>Reclame, video de brand si continut social, create pentru companii din industrii diferite.</p>
     </div>
 
     <div class="cat-tabs reveal">
@@ -349,17 +366,20 @@
     </div>
 
     <div class="grid" id="portfolio-grid">
-      <div class="card reveal" data-cat="ads"><span class="card-tag">Reclamă</span><div class="card-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="card-info"><h4>Nume client</h4><span>Industrie · Meta / TikTok</span></div></div>
-      <div class="card reveal" data-cat="brand"><span class="card-tag">Brand</span><div class="card-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="card-info"><h4>Nume client</h4><span>Industrie · Film corporate</span></div></div>
-      <div class="card reveal" data-cat="social"><span class="card-tag">Social</span><div class="card-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="card-info"><h4>Nume client</h4><span>Industrie · Reels</span></div></div>
-      <div class="card reveal" data-cat="ads"><span class="card-tag">Reclamă</span><div class="card-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="card-info"><h4>Nume client</h4><span>Industrie · YouTube Ads</span></div></div>
-      <div class="card reveal" data-cat="brand"><span class="card-tag">Brand</span><div class="card-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="card-info"><h4>Nume client</h4><span>Industrie · Documentar scurt</span></div></div>
-      <div class="card reveal" data-cat="social"><span class="card-tag">Social</span><div class="card-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="card-info"><h4>Nume client</h4><span>Industrie · TikTok</span></div></div>
+      <div class="card reveal" data-cat="ads" data-video="" data-format="vertical"><span class="card-tag">Reclama</span><div class="card-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="card-info"><h4>Nume client</h4><span>Industrie · Meta / TikTok</span></div></div>
+      <div class="card reveal" data-cat="brand" data-video="" data-format="vertical"><span class="card-tag">Brand</span><div class="card-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="card-info"><h4>Nume client</h4><span>Industrie · Film corporate</span></div></div>
+      <div class="card reveal" data-cat="social" data-video="" data-format="vertical"><span class="card-tag">Social</span><div class="card-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="card-info"><h4>Nume client</h4><span>Industrie · Reels</span></div></div>
+      <div class="card reveal" data-cat="ads" data-video="" data-format="vertical"><span class="card-tag">Reclama</span><div class="card-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="card-info"><h4>Nume client</h4><span>Industrie · YouTube Ads</span></div></div>
+      <div class="card reveal" data-cat="brand" data-video="" data-format="vertical"><span class="card-tag">Brand</span><div class="card-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="card-info"><h4>Nume client</h4><span>Industrie · Documentar scurt</span></div></div>
+      <div class="card reveal" data-cat="social" data-video="" data-format="vertical"><span class="card-tag">Social</span><div class="card-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="card-info"><h4>Nume client</h4><span>Industrie · TikTok</span></div></div>
     </div>
   </div>
 </section>
 
 <div class="marquee-wrap">
+  <!-- Cand ai logo-urile: inlocuiesti fiecare rand cu
+       <span class="marquee-item"><img src="assets/brands/nume-brand.png" alt="Nume brand"></span>
+       si pastrezi ACEEASI lista in ambele grupuri. -->
   <div class="marquee">
     <span class="marquee-item"><span class="sq"></span>Compania A</span>
     <span class="marquee-item"><span class="sq"></span>Compania B</span>
@@ -378,18 +398,18 @@
   <div class="wrap">
     <div class="story">
       <div class="story-visual reveal">
-        <img src="assets/nuvinix-icon.jpg" alt="Nuvinix">
+        <img class="founder-photo" src="assets/viviana-bota.jpg" alt="Viviana Bota, fondator Nuvinix">
         <div class="founder-tag">
           <b>Viviana Bota</b>
           Fondator, Nuvinix
         </div>
       </div>
       <div class="story-text reveal">
-        <span class="section-tag">Povestea noastră</span>
-        <h2 style="margin-bottom:24px;">De ce există Nuvinix</h2>
-        <p><b>Nuvinix</b> a pornit dintr-o observație simplă: majoritatea companiilor au un produs bun, dar niciun video care să-l arate așa cum merită.</p>
-        <p>Suntem un studio mic, condus de <b>Viviana Bota</b>, care lucrează direct cu fiecare client — de la concept și filmare, până la montaj și livrarea reclamelor gata de publicat.</p>
-        <p>Nu livrăm doar footage. Livrăm video gândit pentru un scop: să vândă, să convingă sau să construiască încredere în brandul vostru.</p>
+        <span class="section-tag">Povestea noastra</span>
+        <h2 style="margin-bottom:24px;">De ce exista Nuvinix</h2>
+        <p><b>Nuvinix</b> a pornit dintr-o observatie simpla: majoritatea companiilor au un produs bun, dar niciun video care sa-l arate asa cum merita.</p>
+        <p>Suntem un studio mic, condus de <b>Viviana Bota</b>, care lucreaza direct cu fiecare client — de la concept si filmare, pana la montaj si livrarea reclamelor gata de publicat.</p>
+        <p>Nu livram doar footage. Livram video gandit pentru un scop: sa vanda, sa convinga sau sa construiasca incredere in brandul vostru.</p>
       </div>
     </div>
   </div>
@@ -400,14 +420,14 @@
 <section id="proces">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="section-tag">Cum lucrăm</span>
+      <span class="section-tag">Cum lucram</span>
       <h2>De la brief la livrare</h2>
     </div>
     <div class="process reveal">
-      <div class="process-step"><span class="num">01</span><h4>Discovery call</h4><p>Înțelegem brandul, obiectivul campaniei și publicul țintă.</p></div>
-      <div class="process-step"><span class="num">02</span><h4>Concept &amp; script</h4><p>Propunem direcția creativă și structura video-ului.</p></div>
-      <div class="process-step"><span class="num">03</span><h4>Filmare / producție</h4><p>Filmăm pe locație sau folosim materialul vostru existent.</p></div>
-      <div class="process-step"><span class="num">04</span><h4>Montaj &amp; livrare</h4><p>Editare, sunet, subtitrări și export pe toate formatele necesare.</p></div>
+      <div class="process-step"><span class="num">01</span><h4>Discovery call</h4><p>Intelegem brandul, obiectivul campaniei si publicul tinta.</p></div>
+      <div class="process-step"><span class="num">02</span><h4>Concept &amp; script</h4><p>Propunem directia creativa si structura video-ului.</p></div>
+      <div class="process-step"><span class="num">03</span><h4>Filmare / productie</h4><p>Filmam pe locatie sau folosim materialul vostru existent.</p></div>
+      <div class="process-step"><span class="num">04</span><h4>Montaj &amp; livrare</h4><p>Editare, sunet, subtitrari si export pe toate formatele necesare.</p></div>
     </div>
   </div>
 </section>
@@ -416,8 +436,8 @@
   <div class="wrap">
     <div class="contact-box reveal">
       <span class="section-tag">Contact</span>
-      <h2>Hai să facem<br>un video bun.</h2>
-      <p>Spune-ne despre brand și despre ce vreți să arătați — răspundem în cel mult 24 de ore.</p>
+      <h2>Hai sa facem<br>un video bun.</h2>
+      <p>Spune-ne despre brand si despre ce vreti sa aratati — raspundem in cel mult 24 de ore.</p>
       <div class="contact-actions">
         <a href="mailto:contact@nuvinix.com" class="btn-primary">Trimite un email ↗</a>
         <a href="https://www.instagram.com/nuvinix.official" target="_blank" class="btn-secondary">Instagram</a>
@@ -436,6 +456,14 @@
     <span>Studio video &amp; reclame pentru branduri.</span>
   </div>
 </footer>
+
+
+<div class="vmodal" id="vmodal" aria-hidden="true">
+  <div class="vmodal-box" id="vbox">
+    <button class="vmodal-close" id="vclose">Inchide ✕</button>
+    <div id="vframe" style="width:100%;height:100%"></div>
+  </div>
+</div>
 
 <script>
   // Reveal on scroll
@@ -486,6 +514,28 @@
       });
     });
   });
+
+  // Video cards: thumbnail from YouTube + embed in modal
+  const vmodal = document.getElementById('vmodal');
+  const vbox = document.getElementById('vbox');
+  const vframe = document.getElementById('vframe');
+  cards.forEach(card=>{
+    const id = card.getAttribute('data-video');
+    if(!id) return;
+    const thumb = card.getAttribute('data-thumb') || ('https://i.ytimg.com/vi/' + id + '/hqdefault.jpg');
+    const img = document.createElement('img');
+    img.className = 'card-thumb'; img.src = thumb; img.alt = ''; img.loading = 'lazy';
+    card.prepend(img);
+    card.addEventListener('click', ()=>{
+      vbox.classList.toggle('wide', card.getAttribute('data-format') === 'wide');
+      vframe.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+      vmodal.classList.add('open');
+    });
+  });
+  function closeVideo(){ vmodal.classList.remove('open'); vframe.innerHTML = ''; }
+  document.getElementById('vclose').addEventListener('click', closeVideo);
+  vmodal.addEventListener('click', e=>{ if(e.target === vmodal) closeVideo(); });
+  document.addEventListener('keydown', e=>{ if(e.key === 'Escape') closeVideo(); });
 
   // Ambient particles in hero
   const canvas = document.getElementById('particles');
